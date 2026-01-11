@@ -1,0 +1,466 @@
+.hide-setting {
+	display: none !important;
+}
+
+.pf2e-sell-loot-dialog, .pf2e-sell-loot-chat {
+	--text-color: rgb(247, 243, 232);
+	--beige: rgb(120, 100, 82);
+	--dark: rgb(48, 40, 49);
+	--red: rgb(120, 46, 34);
+}
+
+.pf2e-sell-loot-chat {
+	font-family: Gelasio, Georgia, serif;
+	color: rgb(48, 40, 49);
+	font-size: 13px;
+	user-select: none;
+}
+
+.pf2e-sell-loot-chat .sell-loot-table td, 
+.pf2e-sell-loot-chat .sell-loot-table td * {
+	color: var(--dark);
+}
+
+.pf2e-sell-loot-dialog *, .pf2e-sell-loot-chat * {
+	background-color: transparent;
+	font-family: "Gelasio", Georgia, serif;
+	box-sizing: border-box;
+	color-scheme: light;
+	cursor: default;
+	line-height: normal;
+	position: relative;
+	scrollbar-color: var(--red) transparent;
+	scrollbar-width: thin;
+	text-rendering: optimizeSpeed;
+	unicode-bidi: isolate;
+	user-select: none;
+	list-style: none;
+	color: var(--text-color);
+}
+
+.pf2e-sell-loot-dialog i, .pf2e-sell-loot-chat i {
+	font-family: "Font Awesome 6 Pro" !important;
+}
+
+.pf2e-sell-loot-dialog .search-header,
+.pf2e-sell-loot-dialog .multiplier-footer {
+	align-items: center;
+	display: flex;
+	font-size: 14px;
+	height: 26px;
+}
+
+
+.pf2e-sell-loot-dialog .multiplier-footer::before,
+.pf2e-sell-loot-dialog .search-header::before {
+	color: var(--beige);
+	font-family: "Font Awesome 6 Pro", sans-serif;
+	font-weight: 700;
+	left: 8px;
+	position: absolute;
+}
+
+.pf2e-sell-loot-dialog .search-header::before {
+	content: "\f002";
+}
+
+.pf2e-sell-loot-dialog .multiplier-footer::before {
+	content: "\f51e";
+}
+
+.pf2e-sell-loot-dialog input.search-input,
+.pf2e-sell-loot-dialog input.multiplier-input {
+	border: 1px solid var(--beige);
+	border-radius: 0px;
+	box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 6px 0px inset;
+	outline: 1px solid rgba(0, 0, 0, 0);
+	padding: 1px 3px 1px 28px;
+}
+
+.pf2e-sell-loot-dialog .sell-loot-table-scroll,
+.pf2e-sell-loot-chat .sell-loot-table-scroll {
+	max-height: 50vh;
+	overflow-y: auto;
+}
+
+.pf2e-sell-loot-dialog .sell-loot-table,
+.pf2e-sell-loot-chat .sell-loot-table {
+	width: 100%;
+	border-collapse: collapse;
+	margin: 0;
+	table-layout: auto;
+}
+
+.pf2e-sell-loot-dialog .sell-loot-table thead,
+.pf2e-sell-loot-dialog .sell-loot-table tbody,
+.pf2e-sell-loot-chat .sell-loot-table thead,
+.pf2e-sell-loot-chat .sell-loot-table tbody {
+	width: auto;
+	table-layout: auto;
+	border-radius: 0;
+}
+
+
+.pf2e-sell-loot-dialog .sell-loot-table th,
+.pf2e-sell-loot-dialog .sell-loot-table td,
+.pf2e-sell-loot-chat .sell-loot-table th,
+.pf2e-sell-loot-chat .sell-loot-table td {
+	padding: 0px;
+	vertical-align: middle;
+	text-align: middle;
+	height: 24px;
+	overflow: hidden;
+	white-space: nowrap;
+}
+
+.pf2e-sell-loot-dialog .sell-loot-table .category-header,
+.pf2e-sell-loot-chat .sell-loot-table .category-header {
+	align-items: center;
+	background-color: var(--beige);
+	border: 1px solid var(--beige);
+	box-shadow: rgba(0, 0, 0, 0.3) 0px 0px 0px 1px inset, rgba(255, 255, 255, 0.2) 0px 0px 0px 2px inset;
+	outline: none;
+	/* border: none; */
+	font-family: Roboto, sans-serif;
+	font-size: 10px;
+}
+
+.pf2e-sell-loot-dialog button,
+.pf2e-sell-loot-chat button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pf2e-sell-loot-dialog button i,
+.pf2e-sell-loot-chat button i {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.pf2e-sell-loot-dialog .sell-loot-table tbody,
+.pf2e-sell-loot-chat .sell-loot-table tbody {
+	border: 1px solid var(--beige);
+}
+
+.pf2e-sell-loot-dialog .category-header th:first-of-type,
+.pf2e-sell-loot-chat .category-header th:first-of-type,
+.pf2e-sell-loot-dialog .item-name-wrapper *,
+.pf2e-sell-loot-chat .item-name-wrapper * {
+	font-family: Gelasio, Georgia, serif;
+	text-align: left !important;
+}
+
+.pf2e-sell-loot-dialog .category-header *,
+.pf2e-sell-loot-chat .category-header * {
+	justify-content: center;
+	text-align: center;
+	/* background-color: transparent; */
+	font-family: "Roboto", sans-serif;
+	/* font-size: 10px; */
+	font-weight: normal;
+	padding: 4px 0px;
+	/* text-rendering: optimizelegibility; */
+	text-transform: uppercase;
+}
+
+.pf2e-sell-loot-dialog .category-header th:first-child,
+.pf2e-sell-loot-chat .category-header th:first-child {
+	font-size: 14px;
+	font-weight: 500;
+	padding: 0px 4px 0px 8px;
+	text-shadow: rgba(0, 0, 0, 0.75) 0px 0px 2px;
+	text-transform: capitalize;
+}
+
+.pf2e-sell-loot-dialog .sell-loot-table th.price-cell,
+.pf2e-sell-loot-dialog .sell-loot-table td.price-cell,
+.pf2e-sell-loot-dialog .sell-loot-table th.quantity-cell,
+.pf2e-sell-loot-dialog .sell-loot-table td.quantity-cell,
+.pf2e-sell-loot-dialog .sell-loot-table th.bulk-cell,
+.pf2e-sell-loot-dialog .sell-loot-table td.bulk-cell,
+.pf2e-sell-loot-dialog .sell-loot-table th.controls-cell,
+.pf2e-sell-loot-dialog .sell-loot-table td.controls-cell,
+.pf2e-sell-loot-chat .sell-loot-table th.controls-cell,
+.pf2e-sell-loot-chat .sell-loot-table td.controls-cell {
+	width: min-content;
+	white-space: nowrap;
+	padding: 0 4px;
+}
+
+.pf2e-sell-loot-dialog .sell-loot-table tbody tr:nth-child(even),
+.pf2e-sell-loot-chat .sell-loot-table tbody tr:nth-child(even) {
+	background-color: rgba(120, 100, 82, 0.15);
+}
+
+.pf2e-sell-loot-dialog .sell-loot-table tbody tr,
+.pf2e-sell-loot-chat .sell-loot-table tbody tr {
+	font-size: 12px;
+}
+
+.pf2e-sell-loot-dialog .item-name-wrapper,
+.pf2e-sell-loot-chat .item-name-wrapper {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+}
+
+.pf2e-sell-loot-dialog .item-icon,
+.pf2e-sell-loot-dialog .currency-image,
+.pf2e-sell-loot-chat .item-icon {
+    display: block;
+    height: 100%;
+    max-height: 24px;
+    width: auto;
+    flex-shrink: 0;
+}
+
+.pf2e-sell-loot-dialog .price-cell,
+.pf2e-sell-loot-dialog .quantity-cell,
+.pf2e-sell-loot-dialog .bulk-cell,
+.pf2e-sell-loot-dialog .controls-cell,
+.pf2e-sell-loot-chat .quantity-cell,
+.pf2e-sell-loot-chat .price-cell {
+	text-align: center;
+	vertical-align: middle;
+	width: min-content;
+}
+
+/* .pf2e-sell-loot-dialog .sell-loot-table td,
+.pf2e-sell-loot-chat .sell-loot-table td {
+	display: table-cell;
+	vertical-align: middle;
+} */
+
+.pf2e-sell-loot-dialog .quantity-controls {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 1px;
+	height: 20px;
+}
+
+.pf2e-sell-loot-dialog .quantity-controls input {
+	width: 36px;
+	text-align: center;
+	padding: 1px;
+	height: 18px;
+	line-height: 16px;
+	font-size: 12px;
+}
+
+.pf2e-sell-loot-dialog .quantity-controls button {
+	border: none;
+	cursor: pointer;
+	outline: none;
+	font-size: 10px;
+	font-weight: 400;
+	width: 18px;
+	height: 18px;
+}
+
+.pf2e-sell-loot-dialog .quantity-controls button:hover {
+	text-shadow: rgb(255, 0, 0) 0px 0px 8px;
+}
+
+.pf2e-sell-loot-dialog .currency button {
+	width: 30px;
+	height: 24px;
+	min-height: 0px;
+	margin: 0 0 0 2px;
+	background-color: rgb(233, 215, 161);
+	border-style: none;
+	border-width: 0px;
+	border-color: rgba(0, 0, 0, 0.75);
+	border-radius: 1px;
+	box-shadow:
+	0px 0px 0px 1px rgba(0, 0, 0, 0.25),
+	inset 0px 0px 0px 1px rgba(255, 255, 255, 0.25),
+	0px 0px 3px 0px rgba(0, 0, 0, 0.5);
+	color: var(--dark);
+	cursor: pointer;
+	transition-property: all;
+	transition-duration: 0.5s;
+	transition-timing-function: ease;
+	transition-delay: 0s;
+}
+
+.pf2e-sell-loot-dialog .currency button:hover {
+	appearance: auto;
+	background-color: rgb(94, 0, 0);
+	color: rgb(247, 243, 232);
+}
+
+.pf2e-sell-loot-dialog .currency button:hover i {
+	appearance: auto;
+	color: rgb(247, 243, 232);
+}
+
+.pf2e-sell-loot-dialog .currency button i {
+	color: rgba(0, 0, 0, 0.75);
+}
+
+.pf2e-sell-loot-chat .currency ul,
+.pf2e-sell-loot-dialog .currency ul {
+	display: flex;
+	flex-direction: row;
+	padding: 0;
+	margin: 0;
+	list-style: none;
+	width: 100%;
+}
+
+.pf2e-sell-loot-chat .currency,
+.pf2e-sell-loot-dialog .currency {
+	display: flex;
+	align-items: center;
+	background-color: rgb(96, 88, 86);
+	box-shadow: 0 0 0 1px rgba(0,0,0,0.3) inset, 0 0 0 2px rgba(255,255,255,0.2) inset;
+	color: rgb(48, 40, 49);
+	height: 30px;
+	margin: 0;
+	padding: 3px;
+	list-style-type: none;
+	width: 100%;
+}
+
+.pf2e-sell-loot-chat .currency li,
+.pf2e-sell-loot-dialog .currency li {
+	display: flex;
+	align-items: center;
+	text-align: left;
+	text-shadow: 0 0 3px rgba(0,0,0,0.75);
+	list-style-type: none;
+}
+
+.pf2e-sell-loot-chat .currency li {
+	flex: 1 1 0;
+}
+.pf2e-sell-loot-dialog .currency li {
+	flex: 0 1 1 1 0 0;
+}
+
+.pf2e-sell-loot-chat .currency-image,
+.pf2e-sell-loot-dialog .currency-image {
+	background-size: cover;
+	background-repeat: no-repeat;
+	height: 24px;
+	width: 24px;
+	margin-right: 8px;
+	box-shadow: 0 0 0 1px #9f725b, 0 0 0 2px #e9d7a1, 0 0 0 3px #956d58;
+}
+
+.pf2e-sell-loot-chat .denomination.pp .currency-image {
+	background-image: url("/systems/pf2e/icons/equipment/treasure/currency/platinum-pieces.webp");
+}
+.pf2e-sell-loot-chat .denomination.gp .currency-image {
+	background-image: url("/systems/pf2e/icons/equipment/treasure/currency/gold-pieces.webp");
+}
+.pf2e-sell-loot-chat .denomination.sp .currency-image {
+	background-image: url("/systems/pf2e/icons/equipment/treasure/currency/silver-pieces.webp");
+}
+.pf2e-sell-loot-chat .denomination.cp .currency-image {
+	background-image: url("/systems/pf2e/icons/equipment/treasure/currency/copper-pieces.webp");
+}
+
+.pf2e-sell-loot-chat .wealth,
+.pf2e-sell-loot-chat .wealth *,
+.pf2e-sell-loot-dialog .wealth,
+.pf2e-sell-loot-dialog .wealth * {
+	font-family: Roboto, sans-serif;
+}
+
+.pf2e-sell-loot-chat .wealth {
+	align-items: center;
+	background-color: var(--beige);
+	box-shadow: rgba(0, 0, 0, 0.3) 0px 0px 0px 1px inset, rgba(255, 255, 255, 0.2) 0px 0px 0px 2px inset;
+	display: flex;
+	justify-content: space-between;
+	height: 24px;
+	margin-bottom: 8px;
+	/* padding: 0px 4px 0px 4px; */
+	padding: 4px 8px;
+}
+
+.pf2e-sell-loot-chat .wealth .item-name-cell,
+.pf2e-sell-loot-dialog .wealth .item-name-cell {
+	margin: 2px 2px 0px 4px;
+	text-shadow: rgba(0, 0, 0, 0.75) 0px 0px 2px;
+}
+
+.pf2e-sell-loot-chat .wealth .item-name span,
+.pf2e-sell-loot-dialog .wealth .item-name span {
+	display: inline;
+	margin-left: 4px;
+	text-shadow: rgba(0, 0, 0, 0.75) 0px 0px 2px;
+}
+
+.pf2e-sell-loot-chat .wealth .item-name-cell,
+.pf2e-sell-loot-dialog .wealth .item-name-cell {
+	margin: 2px 2px 0px 4px;
+	text-shadow: rgba(0, 0, 0, 0.75) 0px 0px 2px;
+}
+
+
+.pf2e-sell-loot-chat .wealth .item-name {
+	font-weight: bold;
+	text-shadow: rgba(0, 0, 0, 0.75) 0px 0px 2px;
+}
+
+.pf2e-sell-loot-chat .wealth .item-name span {
+	font-weight: normal;
+	text-shadow: rgba(0, 0, 0, 0.75) 0px 0px 2px;
+}
+
+.pf2e-sell-loot-dialog .send-to-gm-label {
+	/* all: revert; */
+	font-family: Roboto, sans-serif;
+	/* text-transform: uppercase; */
+	color: revert;
+	background: revert;
+	box-sizing: revert;
+	cursor: revert;
+	user-select: revert;
+	line-height: revert;
+	position: revert;
+	scrollbar-color: revert;
+	scrollbar-width: revert;
+	text-rendering: revert;
+	unicode-bidi: revert;
+	list-style: revert;
+}
+.pf2e-sell-loot-dialog .send-to-gm-label #send-to-gm::before,
+.pf2e-sell-loot-dialog .send-to-gm-label #send-to-gm::after {
+	display: none;
+}
+
+.pf2e-sell-loot-dialog .send-to-gm-label {
+	cursor: pointer;
+	width: max-content;
+	justify-self: center;
+	margin-top: 1rem;
+}
+
+.pf2e-sell-loot-dialog .send-to-gm-label #send-to-gm {
+	appearance: auto;
+	background-color: rgba(0, 0, 0, 0);
+	border-style: none;
+	box-sizing: border-box;
+	cursor: pointer;
+	display: inline-block;
+	flex-basis: 20px;
+	flex-grow: 0;
+	flex-shrink: 0;
+	height: 10px;
+	line-height: 12px;
+	margin: 0px;
+	pointer-events: none;
+	width: 10px;
+}
+
+.pf2e-sell-loot-dialog .send-to-gm-label #send-to-gm:checked {
+	accent-color: rgb(102, 102, 102);
+	position: relative;
+}

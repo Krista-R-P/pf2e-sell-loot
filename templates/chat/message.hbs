@@ -1,0 +1,67 @@
+<div class="pf2e-sell-loot-chat">
+
+	<div class="coinage">
+		<div class="currency">
+			<ul>
+				<li class="denomination gp">
+					<div class="currency-image" data-tooltip="Gold"></div>
+					<span title="{{coins.gp}}">{{coins.gp}}</span>
+				</li>
+				<li class="denomination sp">
+					<div class="currency-image" data-tooltip="Silver"></div>
+					<span title="{{coins.sp}}">{{coins.sp}}</span>
+				</li>
+				<li class="denomination cp">
+					<div class="currency-image" data-tooltip="Copper"></div>
+					<span title="{{coins.cp}}">{{coins.cp}}</span>
+				</li>
+			</ul>
+		</div>
+
+		<div class="wealth">
+			<div class="item-name">
+				<i class="fa-solid fa-coins fa-fw"></i>
+				Total
+				<span>{{totalValue}} gp</span>
+			</div>
+			<div class="item-name">
+				<i class="fa-solid fa-scale-unbalanced fa-fw"></i>
+				Multiplier
+				<span>{{multiplier}}x</span>
+			</div>
+		</div>
+	</div>
+
+  <div class="sell-loot-table-scroll">
+    <table class="sell-loot-table">
+      {{#each categories}}
+        {{#if items.length}}
+          <thead class="category-header">
+            <tr>
+              <th class="item-name-cell">{{name}}</th>
+              <th class="quantity-cell" title="Quantity">Qty.</th>
+              <th class="price-cell">Value</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#each items}}
+              <tr>
+                <td class="item-name-cell">
+                  <div class="item-name-wrapper">
+                    {{#if img}}
+                      <img class="item-icon" src="{{img}}" alt="{{name}}">
+                    {{/if}}
+                    <span class="rarity-{{rarity}}">{{name}}</span>
+                  </div>
+                </td>
+                <td class="quantity-cell">{{quantity}}</td>
+                <td class="price-cell">{{price}}</td>
+              </tr>
+            {{/each}}
+          </tbody>
+        {{/if}}
+      {{/each}}
+    </table>
+  </div>
+
+</div>

@@ -1,0 +1,87 @@
+<div class="pf2e-sell-loot-dialog">
+    <div class="search-header">
+        <input class="search-input" type="search" spellcheck="false" placeholder="Search Items">
+    </div>
+    
+    <div class="sell-loot-table-scroll">
+      <table class="sell-loot-table">
+        {{#each categories}}
+        {{#if items.length}}
+        <thead class="category-header">
+            <tr>
+                <th>{{name}}</th>
+                <th class="price-cell">Value</th>
+                <th class="quantity-cell">Owned</th>
+                <th class="bulk-cell">Bulk</th>
+                <th class="controls-cell quantity-controls">
+                    <button type="button" data-category="{{type}}" title="Set All to 0"><i class="fa-solid fa-angles-left"></i></button>
+                        Sell Quantity
+                    <button type="button" data-category="{{type}}" title="Set All to Max"><i class="fa-solid fa-angles-right"></i></button>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each items}}
+            <tr data-uuid="{{uuid}}" data-item-id="{{id}}" data-category="{{../type}}">
+                <td class="item-name-cell">
+                    <div class="item-name-wrapper">
+                        <img class="item-icon" src="{{img}}" alt="{{name}}">
+                        <span class="rarity-{{rarity}}">{{name}}</span>
+                    </div>
+                </td>
+                <td class="price-cell">{{priceDisplay}}</td>
+                <td class="quantity-cell">{{quantity}}</td>
+                <td class="bulk-cell">{{bulk}}</td>
+                <td class="controls-cell">
+                    <div class="quantity-controls">
+                        <button type="button" data-item-id="{{id}}" data-action="min" title="Set to 0"><i class="fa-solid fa-angles-left"></i></button>
+                        <button type="button" data-item-id="{{id}}" data-action="dec" title="Decrease by 1"><i class="fa-solid fa-minus"></i></button>
+                        <input type="number" name="sell-quantity.{{id}}" class="sell-quantity" 
+                               min="0" max="{{quantity}}" value="0" 
+                               data-item-id="{{id}}" data-max-quantity="{{quantity}}">
+                        <button type="button" data-item-id="{{id}}" data-action="inc" title="Increase by 1"><i class="fa-solid fa-plus"></i></button>
+                        <button type="button" data-item-id="{{id}}" data-action="max" data-max-quantity="{{quantity}}" title="Set to maximum"><i class="fa-solid fa-angles-right"></i></button>
+                    </div>
+                </td>
+            </tr>
+            {{/each}}
+        </tbody>
+        {{/if}}
+        {{/each}}
+      </table>
+    </div>
+    
+    <div class="sell-footer">
+        <div class="coinage">
+            <div class="currency">
+                <li class="label">Coins</li>
+                <li class="denomination gp">
+                    <div class="currency-image" data-tooltip="Gold"></div>
+                    <span>0</span>
+                </li>
+                <li class="denomination sp">
+                    <div class="currency-image" data-tooltip="Silver"></div>
+                    <span>0</span>
+                </li>
+                <li class="denomination cp">
+                    <div class="currency-image" data-tooltip="Copper"></div>
+                    <span>0</span>
+                </li>
+                <li data-tooltip="Set All to 0">
+                    <button type="button" data-action="min-all-items"><i class="fa-solid fa-angles-left fa-fw"></i></button>
+                </li>
+                <li data-tooltip="Set All to Max">
+                    <button type="button" data-action="max-all-items"><i class="fa-solid fa-angles-right fa-fw"></i></button>
+                </li>
+            </div>
+        </div>
+    </div>
+    <div class="multiplier-footer{{#if hideMultiplierField}} hide-setting{{/if}}">
+        <input class="multiplier-input" placeholder="Item Value Multiplier" type="number" id="sell-multiplier" name="sell-multiplier" min="0" step="0.1" value="{{defaultSellMultiplier}}">
+    </div>
+
+    <label class="send-to-gm-label{{#unless showGmToggle}} hide-setting{{/unless}}">
+        <input type="checkbox" id="send-to-gm" name="send-to-gm" {{#if gmToggleChecked}}checked{{/if}}>
+        Whisper output message to GM
+    </label>
+</div>
