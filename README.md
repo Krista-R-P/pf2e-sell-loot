@@ -15,5 +15,5 @@ Key features:
 - All item deletions and coin adjustments are performed with GM permissions for security.
 - Items with no value are ignored by the module.
 
-![Image1](https://raw.githubusercontent.com/Krista-R-P/images/refs/heads/main/pf2e-sell-loot%20img%201.png?token=GHSAT0AAAAAADRSO3NQMS7ETJFWGCNQFCAE2LD74TQ)
-![Image2](https://raw.githubusercontent.com/Krista-R-P/images/refs/heads/main/pf2e-sell-loot%20img%202.png?token=GHSAT0AAAAAADRSO3NQIPJCIXJEFC6363SS2LD75FA)
+![Image1](https://raw.githubusercontent.com/Krista-R-P/images/refs/heads/main/pf2e-sell-loot%20img%201.png)
+![Image2](https://raw.githubusercontent.com/Krista-R-P/images/refs/heads/main/pf2e-sell-loot%20img%202.png)
