@@ -15,8 +15,8 @@ Key features:
 - All item deletions and coin adjustments are performed with GM permissions for security.
 - Items with no value are ignored by the module.
 
-![Image1](https://raw.githubusercontent.com/Krista-R-P/pf2e-award-xp/refs/heads/assets/N%C3%A4ytt%C3%B6kuva%202025-11-09%20010728.png)
+<!-- ![Image1](https://raw.githubusercontent.com/Krista-R-P/pf2e-award-xp/refs/heads/assets/N%C3%A4ytt%C3%B6kuva%202025-11-09%20010728.png)
 ![Image2](https://raw.githubusercontent.com/Krista-R-P/pf2e-award-xp/refs/heads/assets/N%C3%A4ytt%C3%B6kuva%202025-11-09%20010847.png)
 ![Image3](https://raw.githubusercontent.com/Krista-R-P/pf2e-award-xp/refs/heads/assets/N%C3%A4ytt%C3%B6kuva%202025-11-09%20011015.png)
 ![Image4](https://raw.githubusercontent.com/Krista-R-P/pf2e-award-xp/refs/heads/assets/N%C3%A4ytt%C3%B6kuva%202025-11-09%20011142.png)
-![Image5](https://raw.githubusercontent.com/Krista-R-P/pf2e-award-xp/refs/heads/assets/N%C3%A4ytt%C3%B6kuva%202025-11-09%20011426.png)
+![Image5](https://raw.githubusercontent.com/Krista-R-P/pf2e-award-xp/refs/heads/assets/N%C3%A4ytt%C3%B6kuva%202025-11-09%20011426.png) -->
