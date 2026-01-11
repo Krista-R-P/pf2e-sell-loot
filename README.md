@@ -17,3 +17,5 @@ Key features:
 
 ![Image1](https://raw.githubusercontent.com/Krista-R-P/images/refs/heads/main/pf2e-sell-loot%20img%201.png)
 ![Image2](https://raw.githubusercontent.com/Krista-R-P/images/refs/heads/main/pf2e-sell-loot%20img%202.png)
+![Image3](https://raw.githubusercontent.com/Krista-R-P/images/refs/heads/main/pf2e-sell-loot%20img%203.png)
+![Image4](https://raw.githubusercontent.com/Krista-R-P/images/refs/heads/main/pf2e-sell-loot%20img%204.png)

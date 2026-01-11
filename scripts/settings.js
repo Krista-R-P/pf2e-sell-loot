@@ -6,6 +6,7 @@ export function registerSellLootSettings() {
 		config: true,
 		type: Number,
 		default: 0.5,
+		min: 0,
 		restricted: true
 	});
 
