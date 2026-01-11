@@ -1,21 +1,20 @@
 import { renderSellDialog } from './dialog-rendering.js';
 
-// Create and add sell loot button to actor sheets
+/**
+ * Creates and adds the Sell Loot button to actor sheets.
+ * @param {Application} app - The actor sheet application instance.
+ * @param {jQuery} html - The jQuery HTML of the sheet.
+ * @returns {Promise<void>}
+ */
 export async function createSellButton(app, html) {
-    // Find the wealth div and add sell button
     const wealthDiv = html.find('.wealth');
     if (wealthDiv.length) {
-        // Render the button template
         const buttonHtml = await renderTemplate("modules/pf2e-sell-loot/templates/apps/button.hbs", {});
         const sellButton = $(buttonHtml);
-        
-        // Add click handler
         sellButton.on('click', (event) => {
             event.preventDefault();
-            console.log('%cSell Loot button clicked!', 'color: yellow; font-weight: bold;');
             renderSellDialog(app.actor);
         });
-        
         wealthDiv.append(sellButton);
     }
 }

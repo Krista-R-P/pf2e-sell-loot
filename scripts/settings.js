@@ -1,3 +1,6 @@
+/**
+ * Registers module settings for pf2e-sell-loot.
+ */
 export function registerSellLootSettings() {
 	game.settings.register('pf2e-sell-loot', 'defaultSellMultiplier', {
 		name: 'Default Sell Multiplier',

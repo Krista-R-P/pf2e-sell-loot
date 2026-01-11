@@ -1,4 +1,9 @@
-// Accepts selectedItems: array of { id, quantity }
+/**
+ * Deletes or updates selected items from an actor's inventory.
+ * @param {Actor} actor - The actor whose items will be modified.
+ * @param {Array<{id: string, quantity: number}>} selectedItems - Items to delete or update.
+ * @returns {Promise<void>}
+ */
 export async function deleteSelectedItems(actor, selectedItems) {
     if (!selectedItems.length) return;
     const updates = [];

@@ -1,9 +1,10 @@
 import { getInventoryData } from './inventory.js';
 import { setupDialogEventHandlers } from './dialog-events.js';
-import { setupCategoryRowStriping } from './dialog-events.js';
+import { setupCategoryRowStriping } from './utils.js';
 import { addCoinsToActor } from './add-coins.js';
 import { deleteSelectedItems } from './delete-items.js';
 import { dialogState } from './dialog-state.js';
+import { getItemTotalValue } from './utils.js';
 
 export async function renderSellDialog(actor) {
     // Get the actor's inventory data
@@ -65,14 +66,6 @@ export async function renderSellDialog(actor) {
                     const multiplier = dialogState.sellMultiplier ?? 0.5;
                     let totalValue = 0;
                     // Prepare sold items data for chat, but filter out 0gp items
-                    function getItemTotalValue(item, quantity, multiplier) {
-                        if (!item || !item.system.price?.value) return 0;
-                        const price = typeof item.system.price.value === 'object' ? item.system.price.value : { gp: 0 };
-                        const gp = price.gp || 0;
-                        const sp = price.sp || 0;
-                        const cp = price.cp || 0;
-                        return ((gp * 100 + sp * 10 + cp) * quantity * multiplier) / 100;
-                    }
                     const soldItemsRaw = dialogState.selectedItems.map(sel => {
                         const item = actor.items.get(sel.id);
                         const itemTotal = getItemTotalValue(item, sel.quantity, multiplier);
@@ -94,20 +87,6 @@ export async function renderSellDialog(actor) {
                     // Use dialogState for coins and items
                     await addCoinsToActor(actor, dialogState.coinTotals);
                     await deleteSelectedItems(actor, dialogState.selectedItems);
-                    // Helper to format coin object as string
-                    function formatCoins(coins) {
-                        if (!coins) return "0 gp";
-                        const pp = coins.pp || 0;
-                        const gp = coins.gp || 0;
-                        const sp = coins.sp || 0;
-                        const cp = coins.cp || 0;
-                        const parts = [];
-                        if (pp) parts.push(`${pp} pp`);
-                        if (gp) parts.push(`${gp} gp`);
-                        if (sp) parts.push(`${sp} sp`);
-                        if (cp) parts.push(`${cp} cp`);
-                        return parts.length ? parts.join(", ") : "0 gp";
-                    }
                     const categoryDefs = [
                         { name: "Weapons & Shields", itemTypes: ["weapon", "shield"] },
                         { name: "Armor", itemTypes: ["armor"] },
@@ -170,7 +149,7 @@ export async function renderSellDialog(actor) {
     // Add event handlers after dialog is rendered
     dialog.addEventListener("render", () => {
         setupDialogEventHandlers(dialog, dialogData);
-        setupCategoryRowStriping(dialog);
+        setupCategoryRowStriping(dialog.element);
         // Calculate values with multiplier on initial render
         const element = dialog.element;
         if (element && typeof element.querySelector === 'function') {

@@ -1,7 +1,78 @@
 import { dialogState } from './dialog-state.js';
+import { getItemTotalValue, getVisibleSellQuantityInputs, attachListeners, updateCurrencySpans, warnIfMissing, parseMultiplier } from './utils.js';
 // Setup event handlers for the dialog
 export function setupDialogEventHandlers(dialog, dialogData) {
-            // Update coin display to reflect total value
+	/**
+	 * Updates the price display for all visible item rows.
+	 * @param {Element} element
+	 * @param {Array} categories
+	 * @param {number} multiplier
+	 */
+	function updatePriceCells(element, categories, multiplier) {
+		element.querySelectorAll('tr[data-item-id] .price-cell').forEach(cell => {
+			const row = cell.closest('tr[data-item-id]');
+			const itemId = row?.dataset.itemId;
+			if (!itemId) return;
+			for (const category of categories) {
+				const item = category.items.find(i => i.id === itemId);
+				if (item) {
+					const pricePer = getItemTotalValue(item, 1, multiplier);
+					cell.textContent = pricePer.toFixed(2) + ' gp';
+				}
+			}
+		});
+	}
+
+	/**
+	 * Collects selected items and calculates the total value.
+	 * @param {Element} element
+	 * @param {Array} categories
+	 * @param {number} multiplier
+	 * @returns {{selectedItems: Array, total: number}}
+	 */
+	function collectSelectedItemsAndTotal(element, categories, multiplier) {
+		let total = 0;
+		const selectedItems = [];
+		element.querySelectorAll('.sell-quantity').forEach(input => {
+			const quantity = parseInt(input.value) || 0;
+			const itemId = input.dataset.itemId;
+			for (const category of categories) {
+				const item = category.items.find(i => i.id === itemId);
+				if (item) {
+					total += getItemTotalValue(item, quantity, multiplier);
+					if (quantity > 0) {
+						selectedItems.push({ id: itemId, quantity });
+					}
+				}
+			}
+		});
+		return { selectedItems, total };
+	}
+	/**
+	 * Sets the value of an input and triggers updateTotalValue.
+	 * @param {HTMLInputElement} input
+	 * @param {number} value
+	 */
+	function setInputValue(input, value) {
+		input.value = value;
+		updateTotalValue();
+	}
+
+	/**
+	 * Enforces min/max constraints on a quantity input and triggers updateTotalValue.
+	 * @param {HTMLInputElement} input
+	 */
+	function enforceMinMax(input) {
+		const min = 0;
+		const max = parseInt(input.dataset.maxQuantity) || 0;
+		let value = parseInt(input.value) || 0;
+		if (value < min) value = min;
+		else if (value > max) value = max;
+		if (input.value != value) input.value = value;
+		updateTotalValue();
+	}
+
+	// Update coin display to reflect total value
     function updateCoinDisplay(totalValue) {
         // Convert totalValue (gp) to gp, sp, cp only
         let remaining = Math.round(totalValue * 100); // total in copper
@@ -12,21 +83,16 @@ export function setupDialogEventHandlers(dialog, dialogData) {
         dialogState.coinTotals.sp = sp;
         dialogState.coinTotals.cp = cp;
         console.log(`[updateCoinDisplay] Setting coins: gp=${gp}, sp=${sp}, cp=${cp}`);
-        // Only update the currency values in the footer
         const footer = element.querySelector('.sell-footer');
+        warnIfMissing(footer, 'sell-footer not found in dialog.');
+        updateCurrencySpans(footer, dialogState.coinTotals);
         if (footer) {
             const gpSpan = footer.querySelector('.denomination.gp span');
             const spSpan = footer.querySelector('.denomination.sp span');
             const cpSpan = footer.querySelector('.denomination.cp span');
-            if (gpSpan && spSpan && cpSpan) {
-                gpSpan.textContent = dialogState.coinTotals.gp;
-                spSpan.textContent = dialogState.coinTotals.sp;
-                cpSpan.textContent = dialogState.coinTotals.cp;
-            } else {
+            if (!(gpSpan && spSpan && cpSpan)) {
                 console.warn('Currency span(s) missing in sell-footer.');
             }
-        } else {
-            console.warn('sell-footer not found in dialog.');
         }
     }
     const element = dialog.element;
@@ -46,22 +112,8 @@ export function setupDialogEventHandlers(dialog, dialogData) {
     
     // Add event listeners to quantity inputs
     element.querySelectorAll('.sell-quantity').forEach(input => {
-        function enforceMinMax() {
-            const min = 0;
-            const max = parseInt(input.dataset.maxQuantity) || 0;
-            let value = parseInt(input.value) || 0;
-            if (value < min) {
-                value = min;
-            } else if (value > max) {
-                value = max;
-            }
-            if (input.value != value) {
-                input.value = value;
-            }
-            updateTotalValue();
-        }
-        input.addEventListener('input', enforceMinMax);
-        input.addEventListener('change', enforceMinMax);
+        input.addEventListener('input', () => enforceMinMax(input));
+        input.addEventListener('change', () => enforceMinMax(input));
     });
     
     // Quantity control buttons
@@ -71,151 +123,83 @@ export function setupDialogEventHandlers(dialog, dialogData) {
             const action = e.target.dataset.action;
             const input = element.querySelector(`input[data-item-id="${itemId}"]`);
             if (!input) return;
-            
             const currentValue = parseInt(input.value) || 0;
             const maxValue = parseInt(input.dataset.maxQuantity) || 0;
-            
             switch (action) {
                 case 'min':
-                    input.value = 0;
+                    setInputValue(input, 0);
                     break;
                 case 'max':
-                    input.value = maxValue;
+                    setInputValue(input, maxValue);
                     break;
                 case 'dec':
-                    input.value = Math.max(0, currentValue - 1);
+                    setInputValue(input, Math.max(0, currentValue - 1));
                     break;
                 case 'inc':
-                    input.value = Math.min(maxValue, currentValue + 1);
+                    setInputValue(input, Math.min(maxValue, currentValue + 1));
                     break;
             }
-            
-            // Trigger change event to update total
-            input.dispatchEvent(new Event('change'));
         });
     });
     
     // Select all category button (max for visible rows in category)
-    element.querySelectorAll('.select-all-category').forEach(button => {
-        button.addEventListener('click', (e) => {
-            const category = e.target.dataset.category;
-            // Only affect visible rows in this category
-            const inputs = Array.from(element.querySelectorAll(`tr[data-category="${category}"]`))
-                .filter(row => row.style.display !== 'none')
-                .map(row => row.querySelector('.sell-quantity'));
-            inputs.forEach(input => {
-                if (input) input.value = input.dataset.maxQuantity;
-            });
-            updateTotalValue();
+    attachListeners('.select-all-category', (e) => {
+        const category = e.target.dataset.category;
+        getVisibleSellQuantityInputs(element, category).forEach(input => {
+            input.value = input.dataset.maxQuantity;
         });
-    });
+        updateTotalValue();
+    }, element);
 
     // Select all items button (max for all visible rows)
-    const selectAllBtn = element.querySelector('#select-all-items');
-    if (selectAllBtn) {
-        selectAllBtn.addEventListener('click', () => {
-            Array.from(element.querySelectorAll('tbody tr'))
-                .filter(row => row.style.display !== 'none')
-                .forEach(row => {
-                    const input = row.querySelector('.sell-quantity');
-                    if (input) input.value = input.dataset.maxQuantity;
-                });
-            updateTotalValue();
+    attachListeners('#select-all-items', () => {
+        getVisibleSellQuantityInputs(element).forEach(input => {
+            input.value = input.dataset.maxQuantity;
         });
-    }
+        updateTotalValue();
+    }, element);
 
     // Clear all items button (min for all visible rows)
-    const clearAllBtn = element.querySelector('#clear-all-items');
-    if (clearAllBtn) {
-        clearAllBtn.addEventListener('click', () => {
-            Array.from(element.querySelectorAll('tbody tr'))
-                .filter(row => row.style.display !== 'none')
-                .forEach(row => {
-                    const input = row.querySelector('.sell-quantity');
-                    if (input) input.value = 0;
-                });
-            updateTotalValue();
+    attachListeners('#clear-all-items', () => {
+        getVisibleSellQuantityInputs(element).forEach(input => {
+            input.value = 0;
         });
-    }
+        updateTotalValue();
+    }, element);
 
     // Min/Max buttons for each category (use controls-cell .quantity-controls in thead, only visible rows)
-    element.querySelectorAll('thead .controls-cell.quantity-controls button').forEach(button => {
-        button.addEventListener('click', (e) => {
-            const category = button.dataset.category;
-            const isMin = button.querySelector('.fa-angles-left') !== null;
-            Array.from(element.querySelectorAll(`tr[data-category="${category}"]`))
-                .filter(row => row.style.display !== 'none')
-                .forEach(row => {
-                    const input = row.querySelector('.sell-quantity');
-                    if (input) input.value = isMin ? 0 : input.dataset.maxQuantity;
-                });
-            updateTotalValue();
+    attachListeners('thead .controls-cell.quantity-controls button', (e) => {
+        const button = e.currentTarget;
+        const category = button.dataset.category;
+        const isMin = button.querySelector('.fa-angles-left') !== null;
+        getVisibleSellQuantityInputs(element, category).forEach(input => {
+            input.value = isMin ? 0 : input.dataset.maxQuantity;
         });
-    });
+        updateTotalValue();
+    }, element);
 
     // Min/Max buttons for all items in the form (footer, only visible rows)
-    element.querySelectorAll('button[data-action="min-all-items"]').forEach(button => {
-        button.addEventListener('click', () => {
-            Array.from(element.querySelectorAll('tbody tr'))
-                .filter(row => row.style.display !== 'none')
-                .forEach(row => {
-                    const input = row.querySelector('.sell-quantity');
-                    if (input) input.value = 0;
-                });
-            updateTotalValue();
+    attachListeners('button[data-action="min-all-items"]', () => {
+        getVisibleSellQuantityInputs(element).forEach(input => {
+            input.value = 0;
         });
-    });
-    element.querySelectorAll('button[data-action="max-all-items"]').forEach(button => {
-        button.addEventListener('click', () => {
-            Array.from(element.querySelectorAll('tbody tr'))
-                .filter(row => row.style.display !== 'none')
-                .forEach(row => {
-                    const input = row.querySelector('.sell-quantity');
-                    if (input) input.value = input.dataset.maxQuantity;
-                });
-            updateTotalValue();
+        updateTotalValue();
+    }, element);
+    attachListeners('button[data-action="max-all-items"]', () => {
+        getVisibleSellQuantityInputs(element).forEach(input => {
+            input.value = input.dataset.maxQuantity;
         });
-    });
+        updateTotalValue();
+    }, element);
 
     // Update total value and coin display when quantities or multiplier change
     function updateTotalValue() {
-        let total = 0;
-        dialogState.selectedItems = []; // Reset selection
-        // Read multiplier from input
         const multiplierInput = element.querySelector('#sell-multiplier');
-        let multiplier = parseFloat(multiplierInput?.value);
-        if (isNaN(multiplier) || multiplier < 0) multiplier = 0;
-        if (multiplier > 1) multiplier = 1;
+        const multiplier = parseMultiplier(multiplierInput);
         dialogState.sellMultiplier = multiplier;
-        // Update each row's price display
-        element.querySelectorAll('tr[data-item-id] .price-cell').forEach(cell => {
-            const row = cell.closest('tr[data-item-id]');
-            const itemId = row?.dataset.itemId;
-            if (!itemId) return;
-            for (const category of dialogData.categories) {
-                const item = category.items.find(i => i.id === itemId);
-                if (item && item.totalPrice) {
-                    // Show price per item with multiplier applied
-                    const pricePer = (item.totalPrice / item.quantity) * multiplier;
-                    cell.textContent = pricePer.toFixed(2) + ' gp';
-                }
-            }
-        });
-        // Calculate total value
-        element.querySelectorAll('.sell-quantity').forEach(input => {
-            const quantity = parseInt(input.value) || 0;
-            const itemId = input.dataset.itemId;
-            for (const category of dialogData.categories) {
-                const item = category.items.find(i => i.id === itemId);
-                if (item && item.totalPrice) {
-                    total += ((item.totalPrice / item.quantity) * quantity) * multiplier;
-                    if (quantity > 0) {
-                        dialogState.selectedItems.push({ id: itemId, quantity });
-                    }
-                }
-            }
-        });
-        // Save total value to dialogState (optional, if you want to track)
+        updatePriceCells(element, dialogData.categories, multiplier);
+        const { selectedItems, total } = collectSelectedItemsAndTotal(element, dialogData.categories, multiplier);
+        dialogState.selectedItems = selectedItems;
         dialogState.totalValue = total;
         updateCoinDisplay(total);
     }
@@ -225,26 +209,4 @@ export function setupDialogEventHandlers(dialog, dialogData) {
         multiplierInput.addEventListener('input', updateTotalValue);
         multiplierInput.addEventListener('change', updateTotalValue);
     }
-}
-
-// Setup alternating row colors within each category
-export function setupCategoryRowStriping(dialog) {
-    const element = dialog.element;
-    
-    // Get all categories
-    const categories = [...new Set(Array.from(element.querySelectorAll('tr[data-category]')).map(tr => tr.dataset.category))];
-    
-    // Apply striping within each category
-    categories.forEach(category => {
-        const categoryRows = element.querySelectorAll(`tr[data-category="${category}"]`);
-        categoryRows.forEach((row, index) => {
-            // Remove any existing striping class first
-            row.classList.remove('item-row-even');
-            
-            // Add striping to odd index rows (which are the 2nd, 4th, 6th... rows)
-            if (index % 2 === 1) {
-                row.classList.add('item-row-even');
-            }
-        });
-    });
 }
