@@ -15,7 +15,7 @@ The GM can configure the default sell multiplier in the module settings, ensurin
 - Items with no value are ignored by the module.
 
 ## Installation
-1. Add this module with this manifestation link: https://github.com/Krista-R-P/pf2e-distribute-coins/releases/latest/download/module.json.
+1. Add this module with this manifestation link: https://github.com/Krista-R-P/pf2e-sell-loot/releases/latest/download/module.json.
 2. Enable the module in your Foundry VTT game under **Manage Modules**.
 
 ## Compatibility
