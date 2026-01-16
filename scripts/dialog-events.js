@@ -82,7 +82,6 @@ export function setupDialogEventHandlers(dialog, dialogData) {
         dialogState.coinTotals.gp = gp;
         dialogState.coinTotals.sp = sp;
         dialogState.coinTotals.cp = cp;
-        console.log(`[updateCoinDisplay] Setting coins: gp=${gp}, sp=${sp}, cp=${cp}`);
         const footer = element.querySelector('.sell-footer');
         warnIfMissing(footer, 'sell-footer not found in dialog.');
         updateCurrencySpans(footer, dialogState.coinTotals);

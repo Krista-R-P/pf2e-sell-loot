@@ -6,14 +6,21 @@ For privacy or roleplay, the output message can be whispered to the GM only, kee
 
 The GM can configure the default sell multiplier in the module settings, ensuring consistent pricing for all sales. Players can override this value per transaction if allowed.
 
-Key features:
+## Key features:
 - Sell multiple items at once from the inventory tab.
 - Set a custom value multiplier for each sale.
 - Automatically converts item value into gold, silver, and copper.
 - Outputs a clear, itemized summary to chat, showing the multiplier used.
 - Option to whisper the sale message to the GM for private transactions.
-- All item deletions and coin adjustments are performed with GM permissions for security.
 - Items with no value are ignored by the module.
+
+## Installation
+1. Add this module with this manifestation link: https://github.com/Krista-R-P/pf2e-distribute-coins/releases/latest/download/module.json.
+2. Enable the module in your Foundry VTT game under **Manage Modules**.
+
+## Compatibility
+- Requires Foundry VTT and the PF2e system
+- Designed for Pathfinder 2e games
 
 ![Image1](https://raw.githubusercontent.com/Krista-R-P/images/refs/heads/main/pf2e-sell-loot%20img%201.png)
 ![Image2](https://raw.githubusercontent.com/Krista-R-P/images/refs/heads/main/pf2e-sell-loot%20img%202.png)
