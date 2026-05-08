@@ -5,7 +5,7 @@
   "version": "0.1.0",
   "compatibility": {
     "minimum": "12",
-    "verified": "13"
+    "verified": "69"
   },
   "relationships": {
     "systems": [
