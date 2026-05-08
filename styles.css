@@ -39,7 +39,7 @@
 }
 
 .pf2e-sell-loot-dialog i, .pf2e-sell-loot-chat i {
-	font-family: "Font Awesome 6 Pro" !important;
+	font-family: "Font Awesome 7 Pro" !important;
 }
 
 .pf2e-sell-loot-dialog .search-header,
@@ -54,7 +54,7 @@
 .pf2e-sell-loot-dialog .multiplier-footer::before,
 .pf2e-sell-loot-dialog .search-header::before {
 	color: var(--beige);
-	font-family: "Font Awesome 6 Pro", sans-serif;
+	font-family: "Font Awesome 7 Pro", sans-serif;
 	font-weight: 700;
 	left: 8px;
 	position: absolute;
